@@ -70,7 +70,39 @@ public class Logic {
 
     public boolean isWin() {
         int[][] table = this.convert();
-        boolean result = false;
+        boolean result = true;
+        for (int index = 0; index < table.length; index++) {
+            //System.out.println(table[index][index]);
+
+            //проверка по горизонтали
+            result = true;
+            for (int x = 0; x < table.length; x++) {
+                if (table[x][index] == 0) {
+//                    System.out.println("x:" + x + " index:" + index+ " :" + table[x][index]);
+                    result = false;
+                    break;
+                }
+            }
+            if (result) {
+                break;
+            }
+
+            //проверка по вертикали
+            result = true;
+            for (int y = 0; y < table.length; y++) {
+                if (table[index][y] == 0) {
+//                    System.out.println("index:" + index+ " y:" + y + " :" + table[index][y]);
+                    result = false;
+                    break;
+                }
+            }
+            if (result) {
+                break;
+            }
+
+        }
+
+//        System.out.println(result);
         return result;
     }
 
