@@ -39,12 +39,12 @@ public class Logic {
         return rst;
     }
 
-    public boolean isFree(Cell ... cells) {
+    public boolean isFree(Cell... cells) {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
@@ -72,39 +72,56 @@ public class Logic {
         int[][] table = this.convert();
         boolean result = true;
         for (int index = 0; index < table.length; index++) {
-            //System.out.println(table[index][index]);
 
-            //проверка по горизонтали
-            result = true;
-            for (int x = 0; x < table.length; x++) {
-                if (table[x][index] == 0) {
-//                    System.out.println("x:" + x + " index:" + index+ " :" + table[x][index]);
-                    result = false;
-                    break;
-                }
-            }
+            result = monoVertical(table, index);
             if (result) {
                 break;
             }
-
-            //проверка по вертикали
-            result = true;
-            for (int y = 0; y < table.length; y++) {
-                if (table[index][y] == 0) {
-//                    System.out.println("index:" + index+ " y:" + y + " :" + table[index][y]);
-                    result = false;
-                    break;
-                }
-            }
+            result = monoHorizontal(table, index);
             if (result) {
                 break;
             }
-
         }
-
-//        System.out.println(result);
         return result;
     }
+
+    /**
+     * проверяет заполнение колонки
+     *
+     * @param board - массив
+     * @param colum - номер колонки
+     * @return
+     */
+    public static boolean monoVertical(int[][] board, int colum) {
+        boolean result = true;
+        for (int index = 0; index < board.length; index++) {
+            if (board[index][colum] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * проверяет заполнение строки
+     *
+     * @param board массив
+     * @param row   номер строки
+     * @return результат проверки
+     */
+    public static boolean monoHorizontal(int[][] board, int row) {
+        boolean result = true;
+        for (int index = 0; index < board.length; index++) {
+            int value = board[row][index];
+            if (value != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
 
     public int[][] convert() {
         int[][] table = new int[this.size][this.size];
