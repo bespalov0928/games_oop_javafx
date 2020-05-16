@@ -21,14 +21,31 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) {
+    public boolean move(Cell source, Cell dest) throws IllegalStateException {
         boolean rst = false;
         int index = this.findBy(source);
         if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+            try {
+                Cell[] steps = this.figures[index].way(source, dest);
+                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                    rst = true;
+
+                    //----------
+                    for (Cell cell : steps) {
+                        for (Figure figure : this.figures) {
+                            if (cell.equals(figure.position())) {
+                                rst = false;
+                                //break;
+                            }
+                        }
+                        //----------
+                    }
+                    if (rst) {
+                        this.figures[index] = this.figures[index].copy(dest);
+                    }
+                 }
+            } catch (IllegalStateException ise) {
+                System.out.println(String.format("Could not move by diagonal from %s to %s", source, dest));
             }
         }
         return rst;
