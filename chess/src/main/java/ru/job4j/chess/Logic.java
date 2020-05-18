@@ -28,22 +28,11 @@ public class Logic {
             try {
                 Cell[] steps = this.figures[index].way(source, dest);
                 if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                    rst = true;
-
-                    //----------
-                    for (Cell cell : steps) {
-                        for (Figure figure : this.figures) {
-                            if (cell.equals(figure.position())) {
-                                rst = false;
-                                //break;
-                            }
-                        }
-                        //----------
-                    }
+                    rst = check(steps);
                     if (rst) {
                         this.figures[index] = this.figures[index].copy(dest);
                     }
-                 }
+                }
             } catch (IllegalStateException ise) {
                 System.out.println(String.format("Could not move by diagonal from %s to %s", source, dest));
             }
@@ -63,7 +52,7 @@ public class Logic {
         for (int index = 0; index != this.figures.length; index++) {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
                 rst = index;
-                break;
+                //break;
             }
         }
         return rst;
@@ -74,5 +63,17 @@ public class Logic {
         return "Logic{" +
                 "figures=" + Arrays.toString(this.figures) +
                 '}';
+    }
+
+    private boolean check(Cell[] steps) {
+        boolean rst = true;
+        for (Cell cell : steps) {
+            if (findBy(cell) < 0) {
+                continue;
+            }
+            rst = false;
+            break;
+        }
+        return rst;
     }
 }

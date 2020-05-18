@@ -43,11 +43,11 @@ public class BishopBlack implements Figure {
     private Cell[] arrayCell(Cell source, Cell dest) {
         int size = Math.abs(source.x - dest.x);
         Cell[] steps = new Cell[size];
-        int deltaX = source.x - dest.x;
-        int deltaY = source.y - dest.y;
+        int deltaX = Integer.compare(dest.x, source.x);
+        int deltaY = Integer.compare(dest.y, source.y);
         for (int index = 0; index < size; index++) {
-            int x = deltaX < 0 ? source.x + index + 1 : source.x - index - 1;
-            int y = deltaY < 0 ? source.y + index + 1 : source.y - index - 1;
+            int x = source.x + ((index + 1) * deltaX);
+            int y = source.y + ((index + 1) * deltaY);
             steps[index] = Cell.findBy(x, y);
         }
         return steps;
