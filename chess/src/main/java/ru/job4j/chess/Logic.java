@@ -52,7 +52,7 @@ public class Logic {
         for (int index = 0; index != this.figures.length; index++) {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
                 rst = index;
-                //break;
+                break;
             }
         }
         return rst;
