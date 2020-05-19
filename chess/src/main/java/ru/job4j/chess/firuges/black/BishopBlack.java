@@ -18,7 +18,7 @@ public class BishopBlack implements Figure {
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest)  {
+    public Cell[] way(Cell source, Cell dest) {
         if (!isDiagonal(source, dest)) {
             throw new IllegalStateException(
                     String.format("Could not move by diagonal from %s to %s", source, dest)
@@ -30,12 +30,10 @@ public class BishopBlack implements Figure {
 
     public boolean isDiagonal(Cell source, Cell dest) {
         boolean rsl = false;
-        Cell[] steps = arrayCell(source, dest);
-        for (Cell cell : steps) {
-            if (cell.x == dest.x && cell.y == dest.y) {
-                rsl = true;
-                break;
-            }
+        int deltaX = Math.abs(dest.x - source.x);
+        int deltaY = Math.abs(dest.y - source.y);
+        if (deltaX == deltaY){
+            rsl = true;
         }
         return rsl;
     }
